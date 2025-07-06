@@ -1,10 +1,42 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+
+Route::post('/cars', [CarController::class, 'addCar']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
