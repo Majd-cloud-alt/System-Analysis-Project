@@ -25,4 +25,32 @@ class CarController extends Controller
             'car' => $car
         ]);
     }
+
+     public function addToCart(Request $request, $id)
+    {
+        $car = CarfindOrFail($id);
+
+        $cart = session()-get('cart', []);
+
+        if (isset($cart[$id])) {
+            $cart[$id]['quantity'] += 1;
+        } else {
+            $cart[$id] = [
+                name = $car-name,
+                price = $car-price,
+                quantity = 1,
+            ];
+        }
+
+        session()-put('cart', $cart);
+
+        return redirect()-route('cart.show')-with('success', 'تمت إضافة السيارة إلى العربة');
+    }
+
+    public function showCart()
+    {
+        $cart = session()-get('cart', []);
+        return view('cart.index', compact('cart'));
+    }
+
 }
