@@ -25,6 +25,38 @@ class CarController extends Controller
             'car' => $car
         ]);
     }
+ public function index()
+    {
+        return response()->json(Car::all(), 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $car = Car::findOrFail($id);
+
+        $validated = $request->validate([
+            'model' => 'required|string',
+            'year' => 'required' ,
+            'brand' => 'required|string',
+        ]);
+
+        $car->update($validated);
+
+        return response()->json([
+            'message' => 'تم تحديث السيارة بنجاح',
+            'car' => $car,
+        ], 200);
+    }
+
+    public function destroy($id)
+    {
+        $car = Car::findOrFail($id);
+        $car->delete();
+
+        return response()->json([
+            'message' => 'تم حذف السيارة بنجاح',
+        ], 200);
+    }
 
      public function addToCart(Request $request, $id)
     {

@@ -13,14 +13,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Route::post('/posts',function(Request $request){
-//     $name=$request->input("name");
-//     return response()->json(["message"=>"hello ".$name]);
-// });
-// Route::get('/posts',function(){
-//     return response()->json(["data"=>'API']);
-// });
-
 Route::get('/',function(){
     return 'API';
 });
@@ -31,12 +23,17 @@ Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
 
+   Route::get('/cars', [CarController::class, 'index']);
+   
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::put('/cars/{id}', [CarController::class, 'update']);
+    Route::delete('/cars/{id}', [CarController::class, 'destroy']);
 Route::post('/cars', [CarController::class, 'addCar']);
+Route::post('/cart/add/{id}', [CarController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [CarController::class, 'showCart'])->name('cart.show');
 
-Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
 
-
+});
 
 
 
